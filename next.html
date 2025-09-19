@@ -200,7 +200,7 @@
   position: relative;
   right: 100px;
   }
-  
+
   #yesBtn:hover {
     transform: scale(1.1);
     box-shadow: 0 6px 18px rgba(0,0,0,0.4);
@@ -217,11 +217,13 @@
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    position: absolute; /* tetap bisa lompat-lompat */
-    left: 750px;
+    position: absolute;
+    left: 50%;  /* mulai dari tengah container */
+    top: 0;
+    transform: translateX(-50%); /* agar benar-benar di tengah */
     z-index: 3;
     transition: transform 0.2s, box-shadow 0.2s;
-  }
+}
 
   #noBtn:hover {
     transform: scale(1.1);
@@ -271,10 +273,10 @@
     </div>
   </div>
 
-  <div id="button-container" style="position: relative; width: 100%; height: 300px;">
+  <div id="button-container" style="position: relative; width: 100%; height: 200px;">
     <button id="yesBtn">DIMAAFIN</button>
-    <button id="noBtn" style="position: absolute;">GAK DIMAAFIN</button>
-  </div>
+    <button id="noBtn">GAK DIMAAFIN</button>
+</div>
 
   <!-- audio -->
   <audio id="bg-music" loop>
