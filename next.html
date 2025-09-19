@@ -16,6 +16,7 @@
     align-items: center;
     min-height: 100vh; /* agar selalu vertikal center */
     flex-direction: column; /* supaya navbar tetap di atas */
+    overflow: hidden;
   }
   /* background layer */
   .bg {
@@ -66,8 +67,8 @@
 
   .card {
     width: 100%;
-    max-width: 420px; 
-    margin: 20px auto;
+    max-width: 420px;
+    margin: 0 auto 7px;
     background: rgba(255, 240, 246, 0.7);
     border-radius: 16px;
     padding: 20px;
@@ -75,16 +76,22 @@
     text-align: center;
     animation: fadeIn 1s ease;
     backdrop-filter: blur(8px);
+    position: relative;
+    top: 120px;
 
-    /* Tambahan agar scrollable */
-    max-height: 70vh;   /* tinggi tetap */
-    overflow-y: auto;   /* scroll jika isi melebihi max-height */
-    /* sembunyikan scrollbar */
-    scrollbar-width: none; /* Firefox */
+    /* Vertikal center */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* Scrollable jika perlu */
+    max-height: 60vh;  
+    overflow-y: auto;  
+    scrollbar-width: none; 
   }
 
   .card::-webkit-scrollbar {
-    width: 0px; /* Chrome, Safari */
+    width: 0px; 
     background: transparent;
   }
 
@@ -176,6 +183,56 @@
       opacity: 0;
     }
   }
+  
+  /* Tombol DIMAAFIN */
+  #yesBtn {
+  background: linear-gradient(135deg, #ff6b81, #ffb6c1);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 2;
+  position: relative;
+  right: 100px;
+  }
+  #yesBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  }
+
+  /* Tombol GAK DIMAAFIN lompat-lompat */
+  #noBtn {
+    background: linear-gradient(135deg, #ffa07a, #ff6347);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    position: absolute; /* tetap bisa lompat-lompat */
+    left: 750px;
+    z-index: 3;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  #noBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  }
+
+  #button-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   </style>
 </head>
 <body>
@@ -213,6 +270,11 @@
     </div>
   </div>
 
+  <div id="button-container" style="position: relative; width: 100%; height: 300px;">
+    <button id="yesBtn">DIMAAFIN</button>
+    <button id="noBtn" style="position: absolute;">GAK DIMAAFIN</button>
+  </div>
+
   <!-- audio -->
   <audio id="bg-music" loop>
     <source src="lagu.mp3" type="audio/mpeg">
@@ -222,21 +284,34 @@
   <button class="music-btn" id="music-toggle">❤️</button>
 
 <script>
-  // animasi navbar
-  const text = "MAAPIN AKU YAA SAYANGG";
-  const typingText = document.getElementById("typing-text");
-  let i = 0;
+  // animasi navbar dengan 4 kalimat
+const texts = [
+  "MAAPIN AKU YAA SAYANGG",
+  "JANGAN MARAH LAGI YA SAYANGG",
+  "AKU BAKALAN LEBIH TERBUKA LAGII",
+  "LOVE YOU SAYANGKUUU ❤"
+];
+const typingText = document.getElementById("typing-text");
+let textIndex = 0;
+let charIndex = 0;
 
-  function typeEffect() {
-    if (i < text.length) {
-      typingText.textContent += text.charAt(i);
-      i++;
-      setTimeout(typeEffect, 120);
-    } else {
-      typingText.style.borderRight = "none";
-    }
+function typeEffect() {
+  if (charIndex < texts[textIndex].length) {
+    typingText.textContent += texts[textIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(typeEffect, 120);
+  } else {
+    // selesai satu kalimat, tunggu sebentar lalu lanjut ke kalimat berikutnya
+    setTimeout(() => {
+      typingText.textContent = ""; // reset teks
+      charIndex = 0;
+      textIndex = (textIndex + 1) % texts.length; // kembali ke kalimat pertama setelah terakhir
+      typeEffect();
+    }, 1000); // jeda 1 detik sebelum kalimat berikutnya
   }
-  window.onload = typeEffect;
+}
+
+window.onload = typeEffect;
 
   // kontrol musik
   const music = document.getElementById("bg-music");
@@ -275,6 +350,32 @@
 
   // bikin heart tiap 500ms
   setInterval(createHeart, 500);
+
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const container = document.getElementById("button-container");
+
+  // Tombol DIMAAFIN -> langsung buka WhatsApp
+  yesBtn.addEventListener("click", () => {
+    const phoneNumber = "6285798777220";
+    const message = "AKU MAAFIN KAMU TAPI JAJANIN AKU DULU KALO NGGAK BERARTI GAK DIMAAFIN";
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
+  });
+
+  // Tombol GAK DIMAAFIN -> lompat-lompat
+  noBtn.addEventListener("click", () => {
+    const containerRect = container.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    // Hitung posisi acak, tapi tetap di dalam container
+    const maxX = containerRect.width - btnRect.width;
+    const maxY = containerRect.height - btnRect.height;
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+  });
 </script>
 </body>
 </html>
