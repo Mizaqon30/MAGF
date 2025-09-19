@@ -184,8 +184,18 @@
     }
   }
   
-  /* Tombol DIMAAFIN */
-  #yesBtn {
+#button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;          /* jarak antar tombol */
+  position: relative;
+  margin-top: 20px;
+  flex-wrap: wrap;     /* supaya responsive di HP */
+  height: 120px;       /* container cukup tinggi untuk tombol lompat */
+}
+
+#yesBtn {
   background: linear-gradient(135deg, #ff6b81, #ffb6c1);
   color: #fff;
   border: none;
@@ -197,45 +207,27 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   transition: transform 0.2s, box-shadow 0.2s;
   z-index: 2;
-  position: relative;
-  right: 100px;
-  }
-
-  #yesBtn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-  }
-
-  /* Tombol GAK DIMAAFIN lompat-lompat */
-  #noBtn {
-    background: linear-gradient(135deg, #ffa07a, #ff6347);
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 25px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    position: absolute;
-    left: 50%;  /* mulai dari tengah container */
-    top: 0;
-    transform: translateX(-50%); /* agar benar-benar di tengah */
-    z-index: 3;
-    transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;   /* jangan pakai right */
 }
 
-  #noBtn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-  }
+#noBtn {
+  background: linear-gradient(135deg, #ffa07a, #ff6347);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  position: absolute;  /* tetap lompat-lompat */
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
-  #button-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   </style>
 </head>
 <body>
@@ -273,10 +265,11 @@
     </div>
   </div>
 
-  <div id="button-container" style="position: relative; width: 100%; height: 200px;">
+  <div id="button-container">
     <button id="yesBtn">DIMAAFIN</button>
     <button id="noBtn">GAK DIMAAFIN</button>
-</div>
+  </div>
+
 
   <!-- audio -->
   <audio id="bg-music" loop>
