@@ -1,267 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" href="favicon.gif">
-  <title>FOR MY GF❤</title>
-  <style>
-   body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    background: #000; /* fallback */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* agar selalu vertikal center */
-    flex-direction: column; /* supaya navbar tetap di atas */
-  }
-  /* background layer */
-  .bg {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    z-index: -1;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.gif">
+    <title>FOR MY GF❤</title>
+    <style>
+        /* Reset dan body */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  .bg img {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    object-fit: cover;
-    opacity: 0.7;
-    border-radius: 12px;
-    animation: float 20s infinite alternate ease-in-out;
-  }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b81 0%, #ffb6c1 50%, #ffffff 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-  @keyframes float {
-    0%   { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.7;}
-    50%  { transform: translateY(-50px) scale(1.2) rotate(15deg); opacity: 0.9;}
-    100% { transform: translateY(0) scale(1) rotate(-15deg); opacity: 0.6;}
-  }
+        /* Kartu ucapan */
+        .card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
 
-  .navbar {
-    position: fixed;       /* selalu nempel di atas */
-    top: 0;
-    left: 0;
-    width: 100%;           /* penuh ke samping */
-    background: rgba(255,77,166,0.8);
-    padding: 14px 0;
-    text-align: center;
-    backdrop-filter: blur(6px);
-    z-index: 1000;         /* biar di atas background */
-  }
+        .card h1 {
+            font-size: 2em;
+            color: #ff6b81;
+            margin-bottom: 20px;
+        }
 
-  .navbar span {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffd6e7;
-    font-family: 'Courier New', Courier, monospace;
-    white-space: nowrap;
-    border-right: 3px solid #ffd6e7;
-    overflow: hidden;
-    display: inline-block;
-  }
+        .card p {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 30px;
+        }
 
-  .card {
-    width: 100%;
-    max-width: 420px; /* biar tidak panjang */
-    margin: 20px auto;
-    background: rgba(255, 240, 246, 0.7);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    text-align: center;
-    animation: fadeIn 1s ease;
-    backdrop-filter: blur(8px);
-  }
+        .card button {
+            background-color: #ff6b81;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
 
-  .gif-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 12px;
-  }
+        .card button:hover {
+            background-color: #ff4757;
+            transform: scale(1.1);
+        }
 
-  .gif-wrapper img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    border-radius: 50%;
-    border: 3px solid #ff4da6;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    animation: bounce 2s infinite;
-  }
+        /* Animasi hati */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6b81;
+            transform: rotate(-45deg);
+            top: 20px;
+            left: 50%;
+            animation: float 2s infinite ease-in-out;
+        }
 
-  .card h3 { font-size: 18px; color: #ff4da6; margin-bottom: 6px; }
-  .card h4 { font-size: 16px; color: #555; margin-bottom: 12px; }
-  .card p { font-size: 14px; color: #444; line-height: 1.4; margin-bottom: 10px; }
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6b81;
+            border-radius: 50%;
+        }
 
-  @keyframes fadeIn {
-    from {opacity: 0; transform: translateY(20px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
 
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
 
-  /* tombol musik */
-  .music-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #ff4da6;
-    border: none;
-    border-radius: 50%;
-    width: 55px;
-    height: 55px;
-    font-size: 24px;
-    color: #fff;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
-  }
-
-  .music-btn:hover {
-    transform: scale(1.1);
-  }
-
-  /* ===== RESPONSIVE UNTUK iPhone 13 DAN HP LAIN ===== */
-  @media (max-width: 430px) {
-    .navbar span { font-size: 16px; }
-    .gif-wrapper img { width: 100px; height: 100px; }
-    .card { padding: 12px; }
-    .card h3 { font-size: 16px; }
-    .card h4 { font-size: 14px; }
-    .card p { font-size: 13px; }
-    .music-btn { width: 50px; height: 50px; font-size: 22px; }
-    .bg img { width: 140px; height: 140px; }
-  }
-
-  /* animasi heart background */
-  .heart {
-    position: fixed;
-    bottom: -20px;
-    font-size: 20px;
-    color: #ff4da6;
-    animation: floatUp 6s linear forwards;
-    opacity: 0.8;
-    z-index: 0; /* di belakang card */
-  }
-
-  @keyframes floatUp {
-    0% {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: translateY(-50vh) scale(1.5);
-      opacity: 0.7;
-    }
-    100% {
-      transform: translateY(-100vh) scale(0.8);
-      opacity: 0;
-    }
-  }
-  </style>
+        @keyframes float {
+            0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
+            50% { transform: translateY(-20px) rotate(-45deg); opacity: 0.7; }
+            100% { transform: translateY(0) rotate(-45deg); opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-  <!-- Background dengan 10 foto -->
-  <div class="bg">
-    <img src="foto/1.jpg" style="top:10%; left:5%; animation-delay:0s;">
-    <img src="foto/2.jpg" style="top:20%; left:40%; animation-delay:2s;">
-    <img src="foto/3.jpg" style="top:70%; left:10%; animation-delay:4s;">
-    <img src="foto/4.jpg" style="top:50%; left:80%; animation-delay:6s;">
-    <img src="foto/5.jpg" style="top:85%; left:60%; animation-delay:8s;">
-    <img src="foto/6.jpg" style="top:35%; left:20%; animation-delay:10s;">
-    <img src="foto/7.jpg" style="top:15%; left:70%; animation-delay:12s;">
-    <img src="foto/8.jpg" style="top:60%; left:30%; animation-delay:14s;">
-    <img src="foto/9.jpg" style="top:75%; left:75%; animation-delay:16s;">
-    <img src="foto/10.jpg" style="top:45%; left:50%; animation-delay:18s;">
-  </div>
 
-  <nav class="navbar">
-    <span id="typing-text"></span>
-  </nav>
-
-  <div class="card">
-    <div class="card-content">
-      <div class="gif-wrapper">
-        <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Love Gif">
-      </div>
-      <div class="text">
-        <h3>HALOO PACARNYA AKUU</h3>
-        <h4>HOW'S YOUR DAY??</h4>
-        <p>Semoga hari-harimu baik" aja yaa sayangkuu, aku minta maaf kalo akhir" ini aku buat kamu jealous terus, Tapi semoga ini ngejawab semua kecurigaan kamu sama aku yaa.</p>
-        <p>Aku minta maaf sama kejadian" kemaren yaa sayangg, aku sadar aku gaada waktu sama kamu, semoga kamu mau maafi aku yaa sayangkuu. sama one more sayangg, aku inget banget pernah bilang gini ke kamu "aku gasuka split bill" tapi aku kayanya bakal ingkar janji sama omongan aku sendiri sayang, soalnya aku harus nabung buat akhir tahun sayag, aku minta maaf ya sayangg tapi aku bakalan usahain nggak split bill koo, doain yaa biar papi i ngirim uang terus" an sama akuuu wkwkwkwkwkw</p>
-      </div>
+    <div class="card">
+        <div class="heart"></div>
+        <h1>HALOO SAYANGG</h1>
+        <p>Ada Surat Kecil nih dari Pacarmu, tolong dibaca yaa semoga aja bisa ngebantu nenangin pikiran kamu, okkaiii</p>
+        <button onclick="window.location.href='next.html'">Open The Message ❤️</button>
     </div>
-  </div>
 
-  <!-- audio -->
-  <audio id="bg-music" loop>
-    <source src="lagu.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- tombol musik -->
-  <button class="music-btn" id="music-toggle">❤️</button>
-
-<script>
-  // animasi navbar
-  const text = "MAAPIN AKU YAA SAYANGG";
-  const typingText = document.getElementById("typing-text");
-  let i = 0;
-
-  function typeEffect() {
-    if (i < text.length) {
-      typingText.textContent += text.charAt(i);
-      i++;
-      setTimeout(typeEffect, 120);
-    } else {
-      typingText.style.borderRight = "none";
-    }
-  }
-  window.onload = typeEffect;
-
-  // kontrol musik
-  const music = document.getElementById("bg-music");
-  const toggleBtn = document.getElementById("music-toggle");
-  let isPlaying = false;
-
-  toggleBtn.addEventListener("click", () => {
-    if (isPlaying) {
-      music.pause();
-      isPlaying = false;
-      toggleBtn.textContent = "❤️";
-    } else {
-      music.play();
-      isPlaying = true;
-      toggleBtn.textContent = "🎵";
-    }
-  });
-
-  // animasi love di background
-  function createHeart() {
-    const heart = document.createElement("span");
-    heart.classList.add("heart");
-    heart.textContent = "❤";
-    document.body.appendChild(heart);
-
-    // posisi horizontal random
-    heart.style.left = Math.random() * window.innerWidth + "px";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
-    heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
-
-    // hapus setelah animasi selesai
-    setTimeout(() => {
-      heart.remove();
-    }, 6000);
-  }
-
-  // bikin heart tiap 500ms
-  setInterval(createHeart, 500);
-</script>
 </body>
 </html>
